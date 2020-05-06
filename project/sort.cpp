@@ -64,23 +64,26 @@ void insertionSort(int *arr, int num)
 }		//중간에 arr[j]< arr[j+1]이 되거나 j가 0이 되면 끝난다.
 }
 }
-
+// main.cpp의 전역변수인 numData를 merge함수의 데이터 복사 배열인 new_array의 크기로 하기 위해 전역변수 사용.
+// 원래 merge함수안에서 numData = sizeof(arr)/sizeof(int)라 정의해서 했지만, 데이터 개수가 20000을 넘어가면
+// Segmentation fault가 발생하여 전역변수를 이용했습니다. ㅜㅜㅜㅜ
+extern int numData;
 void merge(int *arr, int left, int mid, int right, int num)
 {
  // Implement here
 		// merge라는 함수에 left sub-array의 index가 left~mid가 주어지고,
-		// right sub-array의 index가 mid+1~right까지 주어졌다고 생각하자.
+		// right sub-arraya의 index가 mid+1~right까지 주어졌다고 생각하자.
 		// 그리고 이 정렬된 두 sub-array를 하나의 배열로 통합시키겠다.
 		// a는 왼쪽 sub-array의 index를 담당한다.
 		int a = left;
 		// b는 오른쪽 sub-array의 index를 담당한다.
 		int b = mid+1;
-		// c는 new_array라는 두 sub-array의 합병을 통해 assign 받을 새로운 배열로 이는 다시 arr에 할당해주는 역할을 한다.
+		// c는 new_array라는 두 sub-array의 합병을 통해 assign 받을 새로운 배열로 
+		// 이는 다시 arr에 할당해주는 역할을 한다.
 		int c = left;
 		// d는 new_array의 크기를 arr의 크기와 동일하게 해주기 위해 만든 크기 저장 variable이다.
-		int d = sizeof(arr)/sizeof(int);
 		// new_array는 입력마다 크기가 바뀌므로 동적 할당을 했다.
-		int* new_array = new int[d];
+		int* new_array = new int[numData];
 		// 두 정렬된  sub-array의 index를 앞에서부터 차례대로 비교한 후 new_array배열에 대입한다.
 		while( a <=mid && b <= right){
 		if(arr[a] <= arr[b]){
@@ -108,7 +111,7 @@ void merge(int *arr, int left, int mid, int right, int num)
 }		// 위에서 assign받은 new_array를 우리가 원하는 arr배열에 할당시키면 완료가 된다.
 		for (int f=left; f<=right; f++){
 		arr[f] = new_array[f];
-}		delete[] new_array;
+}		delete[] new_array; // new_array를 동적 해제 해줘야 다시 이 변수 사용가능.
 }
 void mergeSort(int* arr, int left, int right, int num) 
 {
@@ -124,5 +127,6 @@ void mergeSort(int* arr, int left, int right, int num)
 		mergeSort(arr, left, mid, (mid-left+1)); // 왼쪽 정렬
 		mergeSort(arr, mid+1, right, (right-mid)); // 오른쪽 정렬 
 		merge(arr, left, mid, right, num); // 두 정렬을 합병하는 것으로 함수가 끝이난다.	
+		
 }
 }

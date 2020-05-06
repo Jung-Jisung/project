@@ -5,7 +5,9 @@
 #include <ctime>
 
 #include "sort.h"
-
+// numData는 sort.cpp에서 merge함수의 두 sub-array의 저장배열인 
+// new_array의 크기를 고정시켜주기 위해 global vairable를 사용하겠습니다.
+int numData;
 using namespace std;
 
 void generate_rnd_data(int* arr, int num);
@@ -21,7 +23,7 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  int numData = stoi(argv[1]);
+  numData = stoi(argv[1]);
 
   int* inArr = new int[numData];
   int* ansArr = new int[numData];
