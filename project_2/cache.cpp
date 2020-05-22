@@ -32,12 +32,20 @@ data_t Cache::read_data(addr_t address)
   globalClock += cache_access_time;
 
   // Cache read hit? : Check if target is in cache
-
+  for(int i=0; i< this->size; i++){
+	  if(cache_cells[i].address == mem)
+		  return cache_cells[i].value;}
   // Cache read miss : 
   // 1. Check if there is invalid cell
   // 2. if not, evict a cell and replace
-  
+  for(int i=0; i<this->size;i++){
+	 // if(cache_cells[i].value == 0)
+	 if(cache_cells[i].valid  == false)
+		 cache_cells[i].value = mem->memory_cells[0];}
+  cache_cells[size-1].value = mem->memory_cells[0];
+  return cache_cells[].value;
 
+  
 #ifdef WRITE_BACK
   //check dirty before evict
 #endif

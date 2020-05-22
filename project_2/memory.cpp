@@ -8,14 +8,16 @@
 Memory::Memory(int size, clockCycle_t mem_access_time)
 {
   // implement here
-
+	this -> size = size;
+	this -> mem_access_time = mem_access_time;
+	this -> memory_cell = new data_t[size];
 }
 
 
 Memory::~Memory()
 {
   // implement here
-
+	delete[] memory_cell;
 }
 
 
@@ -24,7 +26,7 @@ int Memory::read_data
 {
   globalClock += mem_access_time;
   // implement here
-
+  return &address;
 }
 
 
@@ -34,6 +36,7 @@ void Memory::write_data
   globalClock += mem_access_time;
   
   // implement here
+	&address = value;
 }
 
 
